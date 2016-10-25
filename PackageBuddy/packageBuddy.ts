@@ -1,20 +1,22 @@
-var path = require('path');
-var tl = require('vso-task-lib');
+import path = require('path');
+import tl = require('vsts-task-lib/task');
+import os = require('os');
+import fs = require('fs');
+
+tl.setResourcePath(path.join( __dirname, 'task.json'));
 
 var isWin = /^win/.test(process.platform);
 
 var exePath = path.join( __dirname, 'tools/PackageBuddy.exe');
 
-var packageBuddyTool;
-
 if(isWin)
 {
-    packageBuddyTool = new tl.ToolRunner(exePath);
+    packageBuddyTool = tl.createToolRunner(exePath);
 }
 else 
 {
-    var packageBuddyTool = new tl.ToolRunner(tl.which('mono', true));
-    packageBuddyTool.arg(exePath + ' ');    
+    packageBuddyTool = tl.createToolRunner(tl.which('mono'), true);
+    packageBuddyTool.arg(exePath);
 }
 
 var projectPath = tl.getInput('projectPath', true);
@@ -57,4 +59,4 @@ packageBuddyTool.exec({ failOnStdErr: false})
     console.error(err.message);
     tl.debug('taskRunner fail');
     tl.exit(1);
-})
+});
