@@ -1,63 +1,48 @@
-import * as path from 'path';
-import * as tl from 'vsts-task-lib/task';
-import * as fs from 'fs';
-import * as os from 'os';
-
-tl.setResourcePath(path.join( __dirname, 'task.json'));
-
+"use strict";
+const path = require('path');
+const tl = require('vsts-task-lib/task');
+tl.setResourcePath(path.join(__dirname, 'task.json'));
 var isWin = /^win/.test(process.platform);
-
-var exePath = path.join( __dirname, 'tools/PackageBuddy.exe');
-
+var exePath = path.join(__dirname, 'tools/PackageBuddy.exe');
 var packageBuddyTool;
-if(isWin)
-{
+if (isWin) {
     packageBuddyTool = tl.createToolRunner(exePath);
 }
-else 
-{
+else {
     packageBuddyTool = tl.createToolRunner(tl.which('mono', true));
     packageBuddyTool.arg(exePath);
 }
-
 var projectPath = tl.getInput('projectPath', true);
 var platform = tl.getInput('platform', true);
 var versionCode = tl.getInput('versionCode', false);
 var versionName = tl.getInput('versionName', false);
 var packageName = tl.getInput('packageName', false);
-
-if(projectPath) {
+if (projectPath) {
     packageBuddyTool.arg("-projectPath='" + projectPath + "' ");
 }
-
-if(platform) {
+if (platform) {
     packageBuddyTool.arg("-platform=" + platform + " ");
 }
-
-if(versionCode) {
+if (versionCode) {
     packageBuddyTool.arg("-versionCode='" + versionCode + "' ");
 }
-
-if(versionName) {
+if (versionName) {
     packageBuddyTool.arg("-versionName='" + versionName + "' ");
 }
-
-if(packageName) {
+if (packageName) {
     packageBuddyTool.arg("-packageName='" + packageName + "' ");
 }
-
 var cwd = tl.getPathInput('cwd', false);
-
 // will error and fail task if it doesn't exist
 tl.checkPath(cwd, 'cwd');
 tl.cd(cwd);
-
-packageBuddyTool.exec({ failOnStdErr: false})
-.then(function(code) {
+packageBuddyTool.exec({ failOnStdErr: false })
+    .then(function (code) {
     tl.exit(code);
 })
-.fail(function(err) {
+    .fail(function (err) {
     console.error(err.message);
     tl.debug('taskRunner fail');
     tl.exit(1);
 });
+//# sourceMappingURL=packageBuddy.js.map

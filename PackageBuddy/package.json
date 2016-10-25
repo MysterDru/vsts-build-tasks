@@ -1,0 +1,24 @@
+{
+  "name": "vsts-packagebuddy-task",
+  "version": "0.2.4",
+  "description": "VSTS Package Buddy Task",
+  "main": "packageBuddy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keannan5390/vsts-build-tasks.git"
+  },
+  "author": "Microsoft Corporation",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/keannan5390/vsts-build-tasksissues"
+  },
+  "homepage": "https://github.com/keannan5390/vsts-build-tasks#readme",
+  "dependencies": {
+    "process": "^0.11.1",
+    "q": "^1.4.1",
+    "vsts-task-lib": "^0.9.20"
+  }
+}
