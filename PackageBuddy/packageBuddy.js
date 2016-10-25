@@ -1,9 +1,21 @@
 var path = require('path');
 var tl = require('vso-task-lib');
 
+var isWin = /^win/.test(process.platform);
+
 var exePath = path.join( __dirname, 'tools/PackageBuddy.exe');
 
-var mono = new tl.ToolRunner(tl.which('mono', true));
+var packageBuddyTool;
+
+if(isWin)
+{
+    packageBuddyTool = new tl.ToolRunner(exePath);
+}
+else 
+{
+    var packageBuddyTool = new tl.ToolRunner(tl.which('mono', true));
+    packageBuddyTool.arg(exePath + ' ');    
+}
 
 var projectPath = tl.getInput('projectPath', true);
 var platform = tl.getInput('platform', true);
@@ -11,26 +23,24 @@ var versionCode = tl.getInput('versionCode', false);
 var versionName = tl.getInput('versionName', false);
 var packageName = tl.getInput('packageName', false);
 
-mono.arg(exePath + ' ')
-
 if(projectPath) {
-    mono.arg("-projectPath='" + projectPath + "' ");
+    packageBuddyTool.arg("-projectPath='" + projectPath + "' ");
 }
 
 if(platform) {
-    mono.arg("-platform=" + platform + " ");
+    packageBuddyTool.arg("-platform=" + platform + " ");
 }
 
 if(versionCode) {
-    mono.arg("-versionCode='" + versionCode + "' ");
+    packageBuddyTool.arg("-versionCode='" + versionCode + "' ");
 }
 
 if(versionName) {
-    mono.arg("-versionName='" + versionName + "' ");
+    packageBuddyTool.arg("-versionName='" + versionName + "' ");
 }
 
 if(packageName) {
-    mono.arg("-packageName='" + packageName + "' ");
+    packageBuddyTool.arg("-packageName='" + packageName + "' ");
 }
 
 var cwd = tl.getPathInput('cwd', false);
@@ -39,7 +49,7 @@ var cwd = tl.getPathInput('cwd', false);
 tl.checkPath(cwd, 'cwd');
 tl.cd(cwd);
 
-mono.exec({ failOnStdErr: false})
+packageBuddyTool.exec({ failOnStdErr: false})
 .then(function(code) {
     tl.exit(code);
 })
