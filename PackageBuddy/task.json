@@ -14,7 +14,7 @@
   "version": {
     "Major": "0",
     "Minor": "2",
-    "Patch": "4"
+    "Patch": "8"
   },
   "minimumAgentVersion": "1.96.0",
   "instanceNameFormat": "PackageBuddy $(message)",
@@ -37,11 +37,15 @@
     },
     {
       "name": "platform",
-      "type": "string",
+      "type": "pickList",
       "label": "Platform",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "Platform type. android or ios"
+      "helpMarkDown": "Platform type.",
+      "options": {
+          "android": "android",
+          "ios": "ios"
+      }
     },
     {
       "name": "packageName",

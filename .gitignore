@@ -196,3 +196,4 @@ ModelManifest.xml
 
 *.vsix
 **/*.tar.gz
+.DS_Store
