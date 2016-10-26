@@ -1,0 +1,45 @@
+{
+  "id": "e062ba50-9b7e-11e6-809d-a5adea910672",
+  "name": "BuildCountCalculator",
+  "friendlyName": "Build Count Calculator",
+  "description": "Uses the VSTS Build API to determine the number of builds that have run.",
+  "author": "hello@drewfrisk.com",
+  "helpMarkDown": "icon created by Chanut is Industries.",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "0",
+    "Minor": "2",
+    "Patch": "3"
+  },
+  "minimumAgentVersion": "1.95.0",
+  "instanceNameFormat": "BuildCountCalculator $(message)",
+  "inputs": [
+    {
+      "name": "cwd",
+      "type": "filePath",
+      "label": "Working Directory",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Current working directory when BuildCountCalculator is run."
+    },
+    {
+      "name": "outputVariable",
+      "type": "string",
+      "label": "Output Vairable",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The variable in your build definition to set the build count to."
+    }
+  ],
+  "execution": {
+    "Node": {
+      "target": "buildCount.js",
+      "argumentFormat": ""
+    }
+  }
+}
