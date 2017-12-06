@@ -14,7 +14,8 @@ else {
 }
 var projectPath = tl.getInput('projectPath', true);
 var platform = tl.getInput('platform', true);
-var versionCode = tl.getInput('versionCode', false);
+var appName = tl.getInput('appName', false);
+var build = tl.getInput('build', false);
 var versionName = tl.getInput('versionName', false);
 var packageName = tl.getInput('packageName', false);
 if (projectPath) {
@@ -23,14 +24,17 @@ if (projectPath) {
 if (platform) {
     packageBuddyTool.arg("-platform=" + platform + " ");
 }
-if (versionCode) {
-    packageBuddyTool.arg("-versionCode='" + versionCode + "' ");
+if (build) {
+    packageBuddyTool.arg("-build='" + build + "' ");
 }
 if (versionName) {
     packageBuddyTool.arg("-versionName='" + versionName + "' ");
 }
 if (packageName) {
     packageBuddyTool.arg("-packageName='" + packageName + "' ");
+}
+if (appName) {
+    packageBuddyTool.arg("-appName='" + appName + "' ");
 }
 var cwd = tl.getPathInput('cwd', false);
 // will error and fail task if it doesn't exist
